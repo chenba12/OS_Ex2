@@ -57,7 +57,7 @@ void checkFlag(int argc, char *const *argv, int *vFlag, int *fFlag) {
 
 void errorMessage() {
     printf("Error not enough arguments\n");
-    printf("Usage: ./cmp <file1> <file2> -v -f\n");
+    printf("Usage: ./copy <file1> <file2> -v -f\n");
     printf("-v for  and -f are optional\n");
     printf("-v for verbose output -f for force overwrite\n");
     exit(1);
