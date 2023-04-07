@@ -16,7 +16,7 @@ void codecA(char *str) {
             str[i] = str[i] - 'A' + 'a';
         }
     }
-    printf("%s\n", str);
+    printf("decoded %s\n", str);
 }
 
 void codecB(char *str) {
