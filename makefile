@@ -1,11 +1,29 @@
-all: cmp copy encode decode
+CC=gcc
+CFLAGS=-Wall -Wextra
+LDFLAGS=-ldl
+all: cmp copy libcodecA.so libcodecB.so encode decode stshell
+
 cmp: cmp.c
-	gcc cmp.c -o cmp
+	$(CC) cmp.c -o cmp
 copy: copy.c
-	gcc copy.c -o copy
+	$(CC) copy.c -o copy
+
+libcodecA.so: codecA.c
+	$(CC) -c -fPIC $< $(CFLAGS) -o codecA.o
+	$(CC) -shared -o $@ codecA.o
+
+libcodecB.so: codecB.c
+	$(CC) -c -fPIC $< $(CFLAGS) -o codecB.o
+	$(CC) -shared -o $@ codecB.o
+
 encode: encode.c
-	gcc encode.c -o encode
+	$(CC) $< $(CFLAGS) -o $@ $(LDFLAGS)
+
 decode: decode.c
-	gcc decode.c -o decode
+	$(CC) $< $(CFLAGS) -o $@ $(LDFLAGS)
+
+stshell: stshell.c
+	$(CC) $< $(CFLAGS) -o $@ $(LDFLAGS)
+
 clean:
-	rm -f *.o cmp copy encode decode
+	rm -f *.o cmp copy libcodecA.so libcodecB.so codecA.o codecB.o encode decode stshell
