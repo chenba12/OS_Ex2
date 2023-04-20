@@ -11,17 +11,21 @@
 
 int handle_signals = 1;
 
-void sigint_handler(int sig) {
+void sigint_handler() {
     if (handle_signals) {
         printf("\n");
         fflush(stdout);
     }
 }
 
-
+/**
+ * execute the command requested
+ * @param args
+ * @param input_fd
+ * @param output_fd
+ */
 void execute_cmd(char **args, int input_fd, int output_fd) {
     pid_t pid = fork();
-
     if (pid == 0) {
         if (input_fd != STDIN_FILENO) {
             dup2(input_fd, STDIN_FILENO);
@@ -46,7 +50,7 @@ int main() {
 
     char cmd[MAX_CMD_LEN];
     while (1) {
-        printf("> ");
+        printf("315800961_318417763_shell$ ");
         fflush(stdout);
         if (fgets(cmd, MAX_CMD_LEN, stdin) == NULL) {
             break;

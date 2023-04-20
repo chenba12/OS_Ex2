@@ -5,9 +5,9 @@
 
 void errorMessage();
 
-void checkFlag(int argc, char *const *argv, int *vFlag, int *fFlag);
+void checkFlag(int argc, char *const *argv, int *vFlag, int *iFlag);
 
-int copyFile(char *filename1, char *filename2, int vFlag, int fFlag);
+int compareFile(char *filename1, char *filename2, int vFlag, int iFlag);
 
 
 int main(int argc, char *argv[]) {
@@ -16,9 +16,17 @@ int main(int argc, char *argv[]) {
     checkFlag(argc, argv, &vFlag, &iFlag);
     char *filename1 = argv[1];
     char *filename2 = argv[2];
-    return copyFile(filename1, filename2, vFlag, iFlag);
+    return compareFile(filename1, filename2, vFlag, iFlag);
 }
 
+/**
+ * check which flags the user entered
+ * -i or -v or both order doesn't matter
+ * @param argc the amount of arguments the program got
+ * @param argv an array that stores the arguments
+ * @param vFlag verbose output entered as -v
+ * @param iFlag ignore case flag entered as -i
+ */
 void checkFlag(int argc, char *const *argv, int *vFlag, int *iFlag) {
     (*vFlag) = -1;
     (*iFlag) = -1;
@@ -55,6 +63,11 @@ void checkFlag(int argc, char *const *argv, int *vFlag, int *iFlag) {
     }
 }
 
+/**
+ * if the user entered wrong args when running this tool
+ * print out a error message and how to use it properly
+ * exit(1)
+ */
 void errorMessage() {
     printf("Error not enough arguments\n");
     printf("Usage: ./cmp <file1> <file2> -v -i\n");
@@ -63,9 +76,17 @@ void errorMessage() {
     exit(1);
 }
 
-int copyFile(char *filename1, char *filename2, int vFlag, int iFlag) {
-    FILE *file1 = fopen(filename1, "r");
-    FILE *file2 = fopen(filename2, "r");
+/**
+ * compare 2 files if they are the same
+ * @param filename1 string
+ * @param filename2 string
+ * @param vFlag verbose output: 1 if the user used -v 0 otherwise
+ * @param iFlag ignore case: 1 if the user used -i 0 otherwise
+ * @return 0 if equal 1 if the files are distinct
+ */
+int compareFile(char *filename1, char *filename2, int vFlag, int iFlag) {
+    FILE *file1 = fopen(filename1, "rb");
+    FILE *file2 = fopen(filename2, "rb");
     if (file2 == NULL || file1 == NULL) {
         if (vFlag == 1)printf("general failure\n");
         return 1;

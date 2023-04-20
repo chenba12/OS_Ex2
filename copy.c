@@ -19,6 +19,14 @@ int main(int argc, char *argv[]) {
     return copyFile(filename1, filename2, vFlag, fFlag);
 }
 
+/**
+ * check which flags the user entered
+ * -i or -f or both order doesn't matter
+ * @param argc the amount of arguments the program got
+ * @param argv an array that stores the arguments
+ * @param vFlag verbose output entered as -v
+ * @param fFlag force copy flag entered as -f
+ */
 void checkFlag(int argc, char *const *argv, int *vFlag, int *fFlag) {
     (*vFlag) = -1;
     (*fFlag) = -1;
@@ -55,6 +63,11 @@ void checkFlag(int argc, char *const *argv, int *vFlag, int *fFlag) {
     }
 }
 
+/**
+ * if the user entered wrong args when running this tool
+ * print out a error message and how to use it properly
+ * exit(1)
+ */
 void errorMessage() {
     printf("Error not enough arguments\n");
     printf("Usage: ./copy <file1> <file2> -v -f\n");
@@ -63,6 +76,15 @@ void errorMessage() {
     exit(1);
 }
 
+/**
+ * Copy a file from 1 location to another or into another file
+ * @param filename1 file to copy
+ * @param filename2 where to copy file1
+ * @param vFlag verbose output: 1 if the user used -v 0 otherwise
+ * @param fFlag force copy: 1 if the user used -i 0 otherwise
+ * @return 0 on success 1 otherwise
+ *
+ */
 int copyFile(char *filename1, char *filename2, int vFlag, int fFlag) {
     int file_exists = access(filename2, F_OK);
     if (file_exists == 0) {
