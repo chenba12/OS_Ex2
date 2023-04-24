@@ -20,7 +20,7 @@ void codecB_encode(char *str) {
 void codecB_decode(char *str) {
     for (int i = 0; str[i] != '\0'; i++) {
         unsigned char c = str[i];
-        c += 3;
+        c -= 3;
         str[i] = (char) c;
     }
     printf("%s\n", str);

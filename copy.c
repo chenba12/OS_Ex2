@@ -84,7 +84,6 @@ void errorMessage() {
  * @param vFlag verbose output: 1 if the user used -v 0 otherwise
  * @param fFlag force copy: 1 if the user used -i 0 otherwise
  * @return 0 on success 1 otherwise
- *
  */
 int copyFile(char *filename1, char *filename2, int vFlag, int fFlag) {
     int file_exists = access(filename2, F_OK);
@@ -94,8 +93,8 @@ int copyFile(char *filename1, char *filename2, int vFlag, int fFlag) {
             exit(1);
         }
     }
-    FILE *file1 = fopen(filename1, "r");
-    FILE *file2 = fopen(filename2, "w");
+    FILE *file1 = fopen(filename1, "rb");
+    FILE *file2 = fopen(filename2, "wb");
     if (file2 == NULL || file1 == NULL) {
         if (vFlag == 1)printf("general failure\n");
         return 1;

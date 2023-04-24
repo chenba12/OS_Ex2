@@ -3,14 +3,16 @@
 #include <stdlib.h>
 
 // function signatures
-typedef char *(*codec_func)(const char *);
 
 void *getLibraryEncode(const char *codec_name);
 
 void executeMethodEncode(const char *codec_name, const char *message, void *lib_handle);
 
-int main(int argc, char *argv[]) {
+//function pointer
+typedef char *(*codec_func)(const char *);
 
+
+int main(int argc, char *argv[]) {
     if (argc < 3) {
         fprintf(stderr,
                 "Usage: %s <codec> <message>\n", argv[0]);

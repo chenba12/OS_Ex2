@@ -6,11 +6,12 @@
 #include <stdlib.h>
 
 // function signatures
-typedef char *(*codec_func)(const char *);
-
 void *getLibraryDecode(const char *codec_name);
 
 void executeMethodDecode(const char *codec_name, const char *message, void *lib_handle);
+
+// function signatures
+typedef char *(*codec_func)(const char *);
 
 int main(int argc, char *argv[]) {
     if (argc < 3) {
@@ -28,7 +29,6 @@ int main(int argc, char *argv[]) {
     dlclose(lib_handle);
     return 0;
 }
-
 
 
 /**

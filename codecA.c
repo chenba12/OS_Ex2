@@ -10,7 +10,7 @@ void codecA_encode(char *str) {
         if (str[i] >= 'a' && str[i] <= 'z') {
             str[i] = (char) (str[i] - 'a' + 'A');
         }
-        // from upper case to lower case
+            // from upper case to lower case
         else if (str[i] >= 'A' && str[i] <= 'Z') {
             str[i] = (char) (str[i] - 'A' + 'a');
         }

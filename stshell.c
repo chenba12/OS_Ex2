@@ -11,13 +11,13 @@
 #define MAX_command_LEN 1024
 
 // function signatures
-bool get_user_input(char *command, size_t max_command_len);
+void sigintHandler();
 
-void process_command(char *command);
+bool getUserInput(char *command, int max_command_len);
 
-void execute_command(char **args, int input_fd, int output_fd);
+void processCommand(char *command);
 
-void sigint_handler();
+void executeCommand(char **args, int input_fd, int output_fd);
 
 
 /**
@@ -26,17 +26,17 @@ void sigint_handler();
  * @return 0
  */
 int main() {
-    signal(SIGINT, sigint_handler);
+    signal(SIGINT, sigintHandler);
     char command[MAX_command_LEN];
     while (true) {
         printf("315800961_318417763_shell$ ");
         fflush(stdout);
 
-        if (!get_user_input(command, MAX_command_LEN)) {
+        if (!getUserInput(command, MAX_command_LEN)) {
             break;
         }
 
-        process_command(command);
+        processCommand(command);
     }
 
     return 0;
@@ -45,7 +45,7 @@ int main() {
 /**
  * blocks CTRL + c (SIGINT) commands to close the program
  */
-void sigint_handler() {
+void sigintHandler() {
     printf("\nCTRL + c not allowed type exit to close the program.\n");
     fflush(stdout);
 }
@@ -56,7 +56,7 @@ void sigint_handler() {
  * @param max_command_len the total size of the command
  * @return true on success and false on failure
  */
-bool get_user_input(char *command, const size_t max_command_len) {
+bool getUserInput(char *command, int max_command_len) {
     if (fgets(command, max_command_len, stdin) == NULL) {
         return false;
     }
@@ -74,7 +74,7 @@ bool get_user_input(char *command, const size_t max_command_len) {
  *
  * @param command the command to process
  */
-void process_command(char *command) {
+void processCommand(char *command) {
     char *token;
     char *args[MAX_ARGS];
     int arg_count = 0;
@@ -89,7 +89,7 @@ void process_command(char *command) {
                 perror("pipe");
                 exit(EXIT_FAILURE);
             }
-            execute_command(args, input_fd, pipe_fds[1]);
+            executeCommand(args, input_fd, pipe_fds[1]);
             close(pipe_fds[1]);
             input_fd = pipe_fds[0];
             arg_count = 0;
@@ -116,7 +116,7 @@ void process_command(char *command) {
         token = strtok(NULL, " ");
     }
     args[arg_count] = NULL;
-    execute_command(args, input_fd, output_fd);
+    executeCommand(args, input_fd, output_fd);
 }
 
 /**
@@ -125,7 +125,7 @@ void process_command(char *command) {
  * @param input_fd: The file descriptor for the input stream to the command
  * @param output_fd: The file descriptor for the output stream from the command
  */
-void execute_command(char **args, int input_fd, int output_fd) {
+void executeCommand(char **args, int input_fd, int output_fd) {
     pid_t pid = fork();
     if (pid == 0) {
         if (input_fd != STDIN_FILENO) {
