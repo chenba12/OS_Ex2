@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+// function signatures
 void errorMessage();
 
 void checkFlag(int argc, char *const *argv, int *vFlag, int *iFlag);
@@ -69,7 +70,7 @@ void checkFlag(int argc, char *const *argv, int *vFlag, int *iFlag) {
  * exit(1)
  */
 void errorMessage() {
-    printf("Error not enough arguments\n");
+    printf("Error: not enough arguments\n");
     printf("Usage: ./cmp <file1> <file2> -v -i\n");
     printf("-v for  and -i are optional\n");
     printf("-v for verbose output -i ignore case\n");

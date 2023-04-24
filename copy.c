@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+// function signatures
 void errorMessage();
 
 void checkFlag(int argc, char *const *argv, int *vFlag, int *fFlag);
@@ -69,7 +70,7 @@ void checkFlag(int argc, char *const *argv, int *vFlag, int *fFlag) {
  * exit(1)
  */
 void errorMessage() {
-    printf("Error not enough arguments\n");
+    printf("Error: not enough arguments\n");
     printf("Usage: ./copy <file1> <file2> -v -f\n");
     printf("-v for  and -f are optional\n");
     printf("-v for verbose output -f for force overwrite\n");

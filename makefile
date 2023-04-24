@@ -1,6 +1,10 @@
 CC=gcc
 CFLAGS=-Wall -Wextra
 LDFLAGS=-ldl
+
+#used to remove the need for export LD_LIBRARY_PATH=.
+RPATH=-Wl,-rpath=./
+
 all: cmp copy libcodecA.so libcodecB.so encode decode stshell
 
 cmp: cmp.c
@@ -17,10 +21,10 @@ libcodecB.so: codecB.c
 	$(CC) -shared -o $@ codecB.o
 
 encode: encode.c
-	$(CC) $< $(CFLAGS) -o $@ $(LDFLAGS)
+	$(CC) $< $(CFLAGS) -o $@ $(LDFLAGS) $(RPATH)
 
 decode: decode.c
-	$(CC) $< $(CFLAGS) -o $@ $(LDFLAGS)
+	$(CC) $< $(CFLAGS) -o $@ $(LDFLAGS) $(RPATH)
 
 stshell: stshell.c
 	$(CC) $< $(CFLAGS) -o $@ $(LDFLAGS)
