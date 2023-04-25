@@ -102,7 +102,7 @@ int compareFile(char *filename1, char *filename2, int vFlag, int iFlag) {
         char1 = tolower(char1);
         char2 = tolower(char2);
     }
-    while (char1 == char2 && char1 != EOF && char2 != EOF) {
+    while (char1 == char2 && char1 != feof(file1) && char2 != feof(file2)) {
         char1 = fgetc(file1);
         char2 = fgetc(file2);
         if (iFlag == 1) {
