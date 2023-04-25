@@ -31,11 +31,9 @@ int main() {
     while (true) {
         printf("315800961_318417763_shell$ ");
         fflush(stdout);
-
         if (!getUserInput(command, MAX_command_LEN)) {
             break;
         }
-
         processCommand(command);
     }
 

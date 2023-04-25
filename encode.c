@@ -13,7 +13,7 @@ typedef char *(*codec_func)(const char *);
 
 
 int main(int argc, char *argv[]) {
-    if (argc < 3) {
+    if (argc != 3) {
         fprintf(stderr,
                 "Usage: %s <codec> <message>\n", argv[0]);
         return 1;
@@ -55,9 +55,9 @@ void *getLibraryEncode(const char *codec_name) {
  * @param lib_handle the library
 */
 void executeMethodEncode(const char *codec_name, const char *message, void *lib_handle) {
-    char str[1024];
-    sprintf(str, "%s_encode", codec_name);
-    codec_func codec_encode = dlsym(lib_handle, str);
+    char function[1024];
+    sprintf(function, "%s_encode", codec_name);
+    codec_func codec_encode = dlsym(lib_handle, function);
     if (!codec_encode) {
         fprintf(stderr, "Error Loading Function: %s\n", dlerror());
         dlclose(lib_handle);

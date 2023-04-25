@@ -10,7 +10,7 @@ void checkFlag(int argc, char *const *argv, int *vFlag, int *iFlag);
 
 int compareFile(char *filename1, char *filename2, int vFlag, int iFlag);
 
-
+// ./cmp file1 file2 -v -i
 int main(int argc, char *argv[]) {
     int vFlag;
     int iFlag;
@@ -30,6 +30,7 @@ int main(int argc, char *argv[]) {
  */
 void checkFlag(int argc, char *const *argv, int *vFlag, int *iFlag) {
     (*vFlag) = -1;
+    // cmp =argv[0] argv[1]=file1  arrgv[2]=file
     (*iFlag) = -1;
     if (argc == 4) {
         int result = strcmp(argv[3], "-v");
@@ -61,6 +62,8 @@ void checkFlag(int argc, char *const *argv, int *vFlag, int *iFlag) {
                 errorMessage();
             }
         }
+    } else if (argc > 5) {
+        errorMessage();
     }
 }
 
